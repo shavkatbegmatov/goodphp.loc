@@ -72,6 +72,18 @@ get('/role/delete/:id', function($id) {
     run('role/delete', ['id' => $id]);
 });
 
+get('/questions', function() {
+    run('question/index');
+});
+
+get('/question/create', function() {
+    run('question/create');
+});
+
+get('/question/delete/:id', function($id) {
+    run('question/delete', ['id' => $id]);
+});
+
 get('/role/assign_permissions/:id', function($id) {
     run('role/assign_permissions', ['id' => $id]);
 });

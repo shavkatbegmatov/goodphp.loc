@@ -251,3 +251,7 @@
 [2025-04-07 07:47:13] (Exception) SQLSTATE[42S02]: Base table or view not found: 1146 Table 'goodphp.role_permission' doesn't exist in D:\OpenServer\domains\goodphp.loc\core\redbean\rb.php:838
 [2025-04-07 07:55:01] (2) Undefined variable $role in D:\OpenServer\domains\goodphp.loc\app\views\account\settings\password.php:3
 [2025-04-07 07:55:01] (2) Trying to access array offset on value of type null in D:\OpenServer\domains\goodphp.loc\app\views\account\settings\password.php:3
+[2025-04-08 11:45:59] (2) Undefined variable $questions in D:\OpenServer\domains\goodphp.loc\app\views\question\index.php:37
+[2025-04-08 11:45:59] (2) foreach() argument must be of type array|object, null given in D:\OpenServer\domains\goodphp.loc\app\views\question\index.php:37
+[2025-04-08 11:46:00] (2) Undefined variable $questions in D:\OpenServer\domains\goodphp.loc\app\views\question\index.php:37
+[2025-04-08 11:46:00] (2) foreach() argument must be of type array|object, null given in D:\OpenServer\domains\goodphp.loc\app\views\question\index.php:37

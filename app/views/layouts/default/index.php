@@ -44,6 +44,45 @@
                                     </span>
                                 </a>
                             </li>
+                            <?php if (checkAccess('question', 'read')): ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/questions">
+                                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-help-hexagon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.875 6.27c.7 .398 1.13 1.143 1.125 1.948v7.284c0 .809 -.443 1.555 -1.158 1.948l-6.75 4.27a2.269 2.269 0 0 1 -2.184 0l-6.75 -4.27a2.225 2.225 0 0 1 -1.158 -1.948v-7.285c0 -.809 .443 -1.554 1.158 -1.947l6.75 -3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98h-.033z" /><path d="M12 16v.01" /><path d="M12 13a2 2 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" /></svg>
+                                        </span>
+
+                                        <span class="nav-link-title">
+                                            Вопросы
+                                        </span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                            <?php if (checkAccess('questionnaire', 'read')): ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/questionnaires">
+                                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-files"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 3v4a1 1 0 0 0 1 1h4" /><path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z" /><path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" /></svg>
+                                        </span>
+
+                                        <span class="nav-link-title">
+                                            Анкеты
+                                        </span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                            <?php if (checkAccess('surveyresponse', 'read')): ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/surveyresponses">
+                                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-tablet-question"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 21h-9a1 1 0 0 1 -1 -1v-16a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v7" /><path d="M19 22v.01" /><path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" /><path d="M11 17a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /></svg>
+                                        </span>
+
+                                        <span class="nav-link-title">
+                                            Прохождения опросов
+                                        </span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
                             <?php if (checkAccess('module', 'read')): ?>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/modules">
