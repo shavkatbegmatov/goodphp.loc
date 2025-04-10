@@ -104,8 +104,8 @@ get('/questionnaire/delete/:id', function($id) {
     run('questionnaire/delete', ['id' => $id]);
 });
 
-get('/questionnaire/questions/:id', function($id) {
-    run('questionnaire/questions', ['id' => $id]);
+get('/questionnaire/edit/:id', function($id) {
+    run('questionnaire/edit', ['id' => $id]);
 });
 
 get('*', function() {

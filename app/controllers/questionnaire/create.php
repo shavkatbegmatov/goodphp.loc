@@ -47,5 +47,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $_SESSION['message'] = ['type' => 'success', 'text' => 'Анкета успешно создана'];
-    redirect('/questionnaire'); // перенаправляем на список анкет (или другую нужную страницу)
+    redirect('/questionnaires'); // перенаправляем на список анкет (или другую нужную страницу)
 }

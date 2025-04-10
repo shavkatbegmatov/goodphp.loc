@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 09 2025 г., 18:38
--- Версия сервера: 8.0.30
--- Версия PHP: 8.1.9
+-- Время создания: Апр 10 2025 г., 13:12
+-- Версия сервера: 10.6.7-MariaDB
+-- Версия PHP: 8.0.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `answeroption` (
-  `id` int NOT NULL,
-  `question_id` int NOT NULL,
-  `option_text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `display_order` int DEFAULT '0',
-  `active` tinyint(1) NOT NULL DEFAULT '1'
+  `id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `option_text` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_order` int(11) DEFAULT 0,
+  `active` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -54,8 +54,8 @@ INSERT INTO `answeroption` (`id`, `question_id`, `option_text`, `display_order`,
 --
 
 CREATE TABLE `module` (
-  `id` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -78,8 +78,8 @@ INSERT INTO `module` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `permission` (
-  `id` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -101,10 +101,10 @@ INSERT INTO `permission` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `question` (
-  `id` int NOT NULL,
-  `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `question_type` enum('multiple_choice','text') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(11) NOT NULL,
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `question_type` enum('multiple_choice','text') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -126,11 +126,11 @@ INSERT INTO `question` (`id`, `text`, `question_type`, `created_at`) VALUES
 --
 
 CREATE TABLE `questionnaire` (
-  `id` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `created_by` int NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -138,7 +138,8 @@ CREATE TABLE `questionnaire` (
 --
 
 INSERT INTO `questionnaire` (`id`, `name`, `description`, `created_by`, `created_at`) VALUES
-(1, 'Название анкеты #1', 'Описание анкеты #1', 1, '2025-04-09 13:23:09');
+(1, 'Название анкеты #1', 'Описание анкеты #1321', 1, '2025-04-09 13:23:09'),
+(2, 'Проверка филиала ___ Корпус #3', 'Вопросы для проверки филиала ___ Корпус #3', 1, '2025-04-10 10:09:16');
 
 -- --------------------------------------------------------
 
@@ -147,10 +148,10 @@ INSERT INTO `questionnaire` (`id`, `name`, `description`, `created_by`, `created
 --
 
 CREATE TABLE `questionnairequestion` (
-  `id` int NOT NULL,
-  `questionnaire_id` int NOT NULL,
-  `question_id` int NOT NULL,
-  `display_order` int DEFAULT '0'
+  `id` int(11) NOT NULL,
+  `questionnaire_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `display_order` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -158,8 +159,11 @@ CREATE TABLE `questionnairequestion` (
 --
 
 INSERT INTO `questionnairequestion` (`id`, `questionnaire_id`, `question_id`, `display_order`) VALUES
-(1, 1, 1, 1),
-(2, 1, 1, 2);
+(5, 1, 1, 1),
+(6, 1, 6, 2),
+(7, 2, 1, 1),
+(8, 2, 1, 2),
+(9, 2, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -168,11 +172,11 @@ INSERT INTO `questionnairequestion` (`id`, `questionnaire_id`, `question_id`, `d
 --
 
 CREATE TABLE `responseanswer` (
-  `id` int NOT NULL,
-  `survey_response_id` int NOT NULL,
-  `question_id` int NOT NULL,
-  `answer_option_id` int DEFAULT NULL,
-  `text_answer` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+  `id` int(11) NOT NULL,
+  `survey_response_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `answer_option_id` int(11) DEFAULT NULL,
+  `text_answer` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -182,8 +186,8 @@ CREATE TABLE `responseanswer` (
 --
 
 CREATE TABLE `role` (
-  `id` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -202,10 +206,10 @@ INSERT INTO `role` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `rolepermission` (
-  `id` int NOT NULL,
-  `role_id` int NOT NULL,
-  `module_id` int NOT NULL,
-  `permission_id` int NOT NULL
+  `id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `module_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -261,10 +265,10 @@ INSERT INTO `rolepermission` (`id`, `role_id`, `module_id`, `permission_id`) VAL
 --
 
 CREATE TABLE `surveyresponse` (
-  `id` int NOT NULL,
-  `questionnaire_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `submitted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(11) NOT NULL,
+  `questionnaire_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `submitted_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -274,12 +278,12 @@ CREATE TABLE `surveyresponse` (
 --
 
 CREATE TABLE `user` (
-  `id` int NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `user`
@@ -296,9 +300,9 @@ INSERT INTO `user` (`id`, `name`, `password`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `userrole` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `role_id` int NOT NULL
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -389,13 +393,6 @@ ALTER TABLE `surveyresponse`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Индексы таблицы `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `Unique Name` (`name`);
-
---
 -- Индексы таблицы `userrole`
 --
 ALTER TABLE `userrole`
@@ -411,126 +408,61 @@ ALTER TABLE `userrole`
 -- AUTO_INCREMENT для таблицы `answeroption`
 --
 ALTER TABLE `answeroption`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `module`
 --
 ALTER TABLE `module`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `questionnaire`
 --
 ALTER TABLE `questionnaire`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `questionnairequestion`
 --
 ALTER TABLE `questionnairequestion`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `responseanswer`
 --
 ALTER TABLE `responseanswer`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `rolepermission`
 --
 ALTER TABLE `rolepermission`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
 
 --
 -- AUTO_INCREMENT для таблицы `surveyresponse`
 --
 ALTER TABLE `surveyresponse`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT для таблицы `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT для таблицы `userrole`
---
-ALTER TABLE `userrole`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- Ограничения внешнего ключа сохраненных таблиц
---
-
---
--- Ограничения внешнего ключа таблицы `answeroption`
---
-ALTER TABLE `answeroption`
-  ADD CONSTRAINT `answeroption_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `questionnaire`
---
-ALTER TABLE `questionnaire`
-  ADD CONSTRAINT `questionnaire_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`) ON DELETE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `questionnairequestion`
---
-ALTER TABLE `questionnairequestion`
-  ADD CONSTRAINT `questionnairequestion_ibfk_1` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `questionnairequestion_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `responseanswer`
---
-ALTER TABLE `responseanswer`
-  ADD CONSTRAINT `responseanswer_ibfk_1` FOREIGN KEY (`survey_response_id`) REFERENCES `surveyresponse` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `responseanswer_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `responseanswer_ibfk_3` FOREIGN KEY (`answer_option_id`) REFERENCES `answeroption` (`id`) ON DELETE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `rolepermission`
---
-ALTER TABLE `rolepermission`
-  ADD CONSTRAINT `rolepermission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `rolepermission_ibfk_2` FOREIGN KEY (`module_id`) REFERENCES `module` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `rolepermission_ibfk_3` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`id`) ON DELETE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `surveyresponse`
---
-ALTER TABLE `surveyresponse`
-  ADD CONSTRAINT `surveyresponse_ibfk_1` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaire` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `surveyresponse_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `userrole`
---
-ALTER TABLE `userrole`
-  ADD CONSTRAINT `userrole_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `userrole_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
