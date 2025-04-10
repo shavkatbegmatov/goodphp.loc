@@ -33,6 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $question['question_type'] = $question_type;
     R::store($question);
 
-    $_SESSION['message'] = ['type' => 'success', 'text' => 'Вопрос успешно создан'];
+    if ($question_type === 'multiple_choice') {
+        redirect('/question/answer_options/' . $question['id']);
+    }
+
     redirect('/questions');
 }

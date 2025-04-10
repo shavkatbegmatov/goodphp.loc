@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 08 2025 г., 11:50
--- Версия сервера: 10.6.7-MariaDB
--- Версия PHP: 8.0.18
+-- Время создания: Апр 09 2025 г., 18:38
+-- Версия сервера: 8.0.30
+-- Версия PHP: 8.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,11 +28,24 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `answeroption` (
-  `id` int(11) NOT NULL,
-  `question_id` int(11) NOT NULL,
-  `option_text` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `display_order` int(11) DEFAULT 0
+  `id` int NOT NULL,
+  `question_id` int NOT NULL,
+  `option_text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_order` int DEFAULT '0',
+  `active` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `answeroption`
+--
+
+INSERT INTO `answeroption` (`id`, `question_id`, `option_text`, `display_order`, `active`) VALUES
+(1, 3, 'sdf', 1, 1),
+(7, 6, 'q1', 3, 1),
+(8, 6, 'q2', 2, 1),
+(9, 6, 'q3', 1, 1),
+(10, 6, 'q4', 5, 1),
+(11, 6, 'q5', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -41,8 +54,8 @@ CREATE TABLE `answeroption` (
 --
 
 CREATE TABLE `module` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -65,8 +78,8 @@ INSERT INTO `module` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `permission` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -88,10 +101,10 @@ INSERT INTO `permission` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `question` (
-  `id` int(11) NOT NULL,
-  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `question_type` enum('multiple_choice','text') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `question_type` enum('multiple_choice','text') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -99,7 +112,12 @@ CREATE TABLE `question` (
 --
 
 INSERT INTO `question` (`id`, `text`, `question_type`, `created_at`) VALUES
-(1, 'Вам предлагали взятку?', 'multiple_choice', '2025-04-08 08:49:19');
+(1, 'Вам предлагали взятку?', 'multiple_choice', '2025-04-08 08:49:19'),
+(2, 'sdfsdfsdfsdf', 'text', '2025-04-08 10:45:21'),
+(3, 'sdfsdfsdf', 'multiple_choice', '2025-04-08 10:45:24'),
+(4, 'asdasdasdasd', 'multiple_choice', '2025-04-08 13:21:56'),
+(5, 'sdfsdfsd', 'multiple_choice', '2025-04-08 13:23:40'),
+(6, 'wwwww', 'multiple_choice', '2025-04-08 14:40:46');
 
 -- --------------------------------------------------------
 
@@ -108,12 +126,19 @@ INSERT INTO `question` (`id`, `text`, `question_type`, `created_at`) VALUES
 --
 
 CREATE TABLE `questionnaire` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_by` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `created_by` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `questionnaire`
+--
+
+INSERT INTO `questionnaire` (`id`, `name`, `description`, `created_by`, `created_at`) VALUES
+(1, 'Название анкеты #1', 'Описание анкеты #1', 1, '2025-04-09 13:23:09');
 
 -- --------------------------------------------------------
 
@@ -122,11 +147,19 @@ CREATE TABLE `questionnaire` (
 --
 
 CREATE TABLE `questionnairequestion` (
-  `id` int(11) NOT NULL,
-  `questionnaire_id` int(11) NOT NULL,
-  `question_id` int(11) NOT NULL,
-  `display_order` int(11) DEFAULT 0
+  `id` int NOT NULL,
+  `questionnaire_id` int NOT NULL,
+  `question_id` int NOT NULL,
+  `display_order` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `questionnairequestion`
+--
+
+INSERT INTO `questionnairequestion` (`id`, `questionnaire_id`, `question_id`, `display_order`) VALUES
+(1, 1, 1, 1),
+(2, 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -135,11 +168,11 @@ CREATE TABLE `questionnairequestion` (
 --
 
 CREATE TABLE `responseanswer` (
-  `id` int(11) NOT NULL,
-  `survey_response_id` int(11) NOT NULL,
-  `question_id` int(11) NOT NULL,
-  `answer_option_id` int(11) DEFAULT NULL,
-  `text_answer` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `id` int NOT NULL,
+  `survey_response_id` int NOT NULL,
+  `question_id` int NOT NULL,
+  `answer_option_id` int DEFAULT NULL,
+  `text_answer` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -149,8 +182,8 @@ CREATE TABLE `responseanswer` (
 --
 
 CREATE TABLE `role` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -169,10 +202,10 @@ INSERT INTO `role` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `rolepermission` (
-  `id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `module_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL
+  `id` int NOT NULL,
+  `role_id` int NOT NULL,
+  `module_id` int NOT NULL,
+  `permission_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -180,36 +213,6 @@ CREATE TABLE `rolepermission` (
 --
 
 INSERT INTO `rolepermission` (`id`, `role_id`, `module_id`, `permission_id`) VALUES
-(97, 1, 1, 1),
-(98, 1, 1, 2),
-(99, 1, 1, 3),
-(100, 1, 1, 4),
-(101, 1, 1, 5),
-(102, 1, 2, 1),
-(103, 1, 2, 2),
-(104, 1, 2, 3),
-(105, 1, 2, 4),
-(106, 1, 3, 1),
-(107, 1, 3, 2),
-(108, 1, 3, 3),
-(109, 1, 3, 4),
-(110, 1, 4, 1),
-(111, 1, 4, 2),
-(112, 1, 4, 3),
-(113, 1, 4, 4),
-(114, 1, 4, 6),
-(115, 1, 7, 1),
-(116, 1, 7, 2),
-(117, 1, 7, 3),
-(118, 1, 7, 4),
-(119, 1, 8, 1),
-(120, 1, 8, 2),
-(121, 1, 8, 3),
-(122, 1, 8, 4),
-(123, 1, 9, 1),
-(124, 1, 9, 2),
-(125, 1, 9, 3),
-(126, 1, 9, 4),
 (127, 2, 7, 1),
 (128, 2, 7, 2),
 (129, 2, 7, 3),
@@ -219,7 +222,37 @@ INSERT INTO `rolepermission` (`id`, `role_id`, `module_id`, `permission_id`) VAL
 (133, 2, 8, 3),
 (134, 2, 8, 4),
 (135, 2, 9, 4),
-(136, 3, 9, 1);
+(136, 3, 9, 1),
+(137, 1, 1, 1),
+(138, 1, 1, 2),
+(139, 1, 1, 3),
+(140, 1, 1, 4),
+(141, 1, 1, 5),
+(142, 1, 2, 1),
+(143, 1, 2, 2),
+(144, 1, 2, 3),
+(145, 1, 2, 4),
+(146, 1, 3, 1),
+(147, 1, 3, 2),
+(148, 1, 3, 3),
+(149, 1, 3, 4),
+(150, 1, 4, 1),
+(151, 1, 4, 2),
+(152, 1, 4, 3),
+(153, 1, 4, 4),
+(154, 1, 4, 6),
+(155, 1, 7, 1),
+(156, 1, 7, 2),
+(157, 1, 7, 3),
+(158, 1, 7, 4),
+(159, 1, 8, 1),
+(160, 1, 8, 2),
+(161, 1, 8, 3),
+(162, 1, 8, 4),
+(163, 1, 9, 1),
+(164, 1, 9, 2),
+(165, 1, 9, 3),
+(166, 1, 9, 4);
 
 -- --------------------------------------------------------
 
@@ -228,10 +261,10 @@ INSERT INTO `rolepermission` (`id`, `role_id`, `module_id`, `permission_id`) VAL
 --
 
 CREATE TABLE `surveyresponse` (
-  `id` int(11) NOT NULL,
-  `questionnaire_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `submitted_at` timestamp NULL DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `questionnaire_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `submitted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -241,12 +274,12 @@ CREATE TABLE `surveyresponse` (
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `user`
@@ -263,9 +296,9 @@ INSERT INTO `user` (`id`, `name`, `password`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `userrole` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `role_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -378,73 +411,73 @@ ALTER TABLE `userrole`
 -- AUTO_INCREMENT для таблицы `answeroption`
 --
 ALTER TABLE `answeroption`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `module`
 --
 ALTER TABLE `module`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `questionnaire`
 --
 ALTER TABLE `questionnaire`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `questionnairequestion`
 --
 ALTER TABLE `questionnairequestion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `responseanswer`
 --
 ALTER TABLE `responseanswer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `rolepermission`
 --
 ALTER TABLE `rolepermission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
 
 --
 -- AUTO_INCREMENT для таблицы `surveyresponse`
 --
 ALTER TABLE `surveyresponse`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `userrole`
 --
 ALTER TABLE `userrole`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

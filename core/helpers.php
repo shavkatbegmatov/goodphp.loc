@@ -54,7 +54,7 @@ function currentUser() {
     $currentTimestamp = time();
     $secondsDifference = abs($currentTimestamp - $timestamp);
 
-    if ($secondsDifference < 1800) {
+    if ($secondsDifference < 100000) {
         $_SESSION['user']['last_activity'] = $currentTimestamp;
         $cachedUser = R::findOne('user', 'id = ?', [$_SESSION['user']['id']]);
         return $cachedUser;

@@ -1,14 +1,14 @@
 <?php
 
-if (!checkAccess('module', 'delete')) {
+if (!checkAccess('question', 'delete')) {
     redirect('/');
 }
 
 $id = $data['id'];
 
-$module = R::load('module', $id);
-if ($module) {
-    R::trash($module);
+$question = R::load('question', $id);
+if ($question) {
+    R::trash($question);
 }
 
-redirect('/modules');
+redirect('/questions');

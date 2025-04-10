@@ -72,6 +72,10 @@ get('/role/delete/:id', function($id) {
     run('role/delete', ['id' => $id]);
 });
 
+get('/role/assign_permissions/:id', function($id) {
+    run('role/assign_permissions', ['id' => $id]);
+});
+
 get('/questions', function() {
     run('question/index');
 });
@@ -84,8 +88,24 @@ get('/question/delete/:id', function($id) {
     run('question/delete', ['id' => $id]);
 });
 
-get('/role/assign_permissions/:id', function($id) {
-    run('role/assign_permissions', ['id' => $id]);
+get('/question/answer_options/:id', function($id) {
+    run('question/answer_options', ['id' => $id]);
+});
+
+get('/questionnaires', function() {
+    run('questionnaire/index');
+});
+
+get('/questionnaire/create', function() {
+    run('questionnaire/create');
+});
+
+get('/questionnaire/delete/:id', function($id) {
+    run('questionnaire/delete', ['id' => $id]);
+});
+
+get('/questionnaire/questions/:id', function($id) {
+    run('questionnaire/questions', ['id' => $id]);
 });
 
 get('*', function() {
