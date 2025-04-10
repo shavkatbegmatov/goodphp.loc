@@ -323,3 +323,5 @@
 [2025-04-09 17:03:07] (2) foreach() argument must be of type array|object, null given in D:\OSPanel\domains\goodphp.loc\app\views\questionnaire\index.php:38
 [2025-04-09 17:03:07] (2) Undefined variable $questions in D:\OSPanel\domains\goodphp.loc\app\views\questionnaire\index.php:38
 [2025-04-09 17:03:07] (2) foreach() argument must be of type array|object, null given in D:\OSPanel\domains\goodphp.loc\app\views\questionnaire\index.php:38
+[2025-04-10 08:16:02] (Exception) SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`goodphp`.`questionnairequestion`, CONSTRAINT `questionnairequestion_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE) in D:\OSPanel\domains\goodphp.loc\core\redbean\rb.php:838
+[2025-04-10 09:43:44] (Exception) SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`goodphp`.`questionnairequestion`, CONSTRAINT `questionnairequestion_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE) in D:\OSPanel\domains\goodphp.loc\core\redbean\rb.php:838
